@@ -1,0 +1,760 @@
+<html>
+<script>
+    function generarRutas() {
+        var date1 = new Date(document.getElementById("start").value);
+        var date2 = new Date(document.getElementById("to").value);
+
+        var difference = date2 - date1;
+
+        var days = difference / (24 * 3600 * 1000);
+
+        var desdeList = getSelectValues(document.getElementById("desde"));
+        var hastaList = getSelectValues(document.getElementById("hasta"));
+
+        for (let d = 0; d <= desdeList.length - 1 ; d++) {
+            for (let h = 0; h <= hastaList.length - 1 ; h++) {
+                date1 = new Date(document.getElementById("start").value);
+                for (let i = 0; i <= days; i++) {
+                    const data = {
+                        'destinationAirportCode': hastaList[h],
+                        'originAirportCode': desdeList[d],
+                        'departureDate': date1.getTime(),
+                        'adults': document.getElementById("adultos").value,
+                        'children': document.getElementById("chicos").value,
+                        'infants': document.getElementById("bebes").value,
+                    };
+
+                    var querystring = encodeQueryData(data);
+                    window.open('https://www.smiles.com.ar/emission?' + querystring + '&isFlexibleDateChecked=false&tripType=2&cabinType=all&currencyCode=BRL&', '_blank');
+                    date1 = addDays(date1, 1);
+                }
+            }
+        }
+    }
+
+    function encodeQueryData(data) {
+        const ret = [];
+        for (let d in data)
+            ret.push(encodeURIComponent(d) + '=' + encodeURIComponent(data[d]));
+        return ret.join('&');
+    }
+
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+
+    function getSelectValues(select) {
+        var result = [];
+        var options = select && select.options;
+        var opt;
+
+        for (var i = 0, iLen = options.length; i < iLen; i++) {
+            opt = options[i];
+
+            if (opt.selected) {
+                result.push(opt.value || opt.text);
+            }
+        }
+        return result;
+    }
+
+</script>
+<h2>Fecha desde</h2>
+<input type="date" id="start" name="trip-start" required>
+<br>
+<h2>Fecha hasta</h2>
+<input type="date" id="to" name="trip-to" required>
+<br>
+<h2>Adultos</h2>
+<input type="number" id="adultos" name="trip-adultos" required value="1">
+<br>
+<h2>Niños</h2>
+<input type="number" id="chicos" name="trip-chicos" required value="0">
+<br>
+<h2>Bebes</h2>
+<input type="number" id="bebes" name="trip-bebes" required value="0">
+<br>
+<h2>Origen</h2>
+<select name="desde" id="desde" multiple="multiple">
+    <option value="BUE">Bs As</option>
+    <option value="MDZ">Mendoza</option>
+    <option value="COR">Cordoba</option>
+    <option value="ROS">Rosario</option>
+    <option value="SCL">Santiago de Chile</option>
+    <option value="MAD">Madrid</option>
+    <option value="BCN">Barcelona</option>
+    <option value="VLC">Valencia</option>
+    <option value="LIS">Lisboa</option>
+    <option value="OPO">Porto</option>
+    <option value="ROM">Roma</option>
+    <option value="MIL">Milán</option>
+    <option value="VCE">Venecia</option>
+    <option value="TRN">Torino</option>
+    <option value="TRS">Trieste</option>
+    <option value="ZAG">Zagreb</option>
+    <option value="SPU">Split</option>
+    <option value="LON">Londres</option>
+    <option value="AMS">Amsterdam</option>
+    <option value="BER">Berlin1</option>
+    <option value="SXF">Berlin2</option>
+    <option value="FRA">Frankfurt</option>
+    <option value="DUS">Dusseldorf</option>
+    <option value="ZRH">Zurich, Suiza</option>
+    <option value="GVA">Ginebra, Suiza</option>
+    <option value="BRN">Berna, Suiza</option>
+    <option value="BSL">Basilea, Suiza</option>
+    <option value="CDG">París</option>
+    <option value="LYS">Lyon</option>
+    <option value="BRU">Bruselas</option>
+    <option value="MVD">Montevideo</option>
+    <option value="LJU">LjubljanaBrnik</option>
+    <option value="LIM">Lima</option>
+    <option value="BOG">Bogotà</option>
+    <option value="SAO">San Pablo</option>
+    <option value="RIO">Rìo de Janeiro</option>
+    <option value="REC">Recife</option>
+    <option value="MCZ">Maceio</option>
+    <option value="SSA">Salvador de Bahía</option>
+    <option value="FOR">Fortaleza</option>
+    <option value="IGU">Foz do Iguazu</option>
+    <option value="BEL">Belém</option>
+    <option value="BHZ">Belo Horizonte</option>
+    <option value="BSB">Brasilia</option>
+    <option value="NAT">Natal</option>
+    <option value="POA">Porto Alegre</option>
+    <option value="VRN">Verona</option>
+    <option value="BLQ">Bolonia</option>
+    <option value="PTY">Panamà</option>
+    <option value="MEX">México</option>
+    <option value="CUN">Cancún</option>
+    <option value="DUB">Dublin</option>
+    <option value="IGR">Iguazu</option>
+    <option value="FTE">El Calafate</option>
+    <option value="USH">Ushuaia</option>
+    <option value="TUC">Tucuman</option>
+    <option value="SLA">Salta</option>
+    <option value="PUJ">Punta Cana</option>
+    <option value="YUL">Montreal</option>
+    <option value="NYC">Nueva York (todos los aeropuertos)</option>
+    <option value="MIA">Miami</option>
+    <option value="FAO">Faro, Portugal</option>
+    <option value="PXO">Porto Santo, Portugal</option>
+    <option value="BIN">Bamiyán, (Provincia de Bamiyán),  Afganistán. Aeropuerto code IATA: BIN</option>
+    <option value="BPM">Bagram, (Provincia de Parwan),  Afganistán. Aeropuerto code IATA: BPM</option>
+    <option value="BST">Lashkar Gah, (Provincia de Helmand),  Afganistán. Aeropuerto code IATA: BST</option>
+    <option value="FBD">Fayzabad, (Provincia de Badajshan),  Afganistán. Aeropuerto code IATA: FBD</option>
+    <option value="HEA">Herat, (Provincia de Herat),  Afganistán. Aeropuerto code IATA: HEA</option>
+    <option value="JAA">Jalalabad, (Provincia de Nangar),  Afganistán. Aeropuerto code IATA: JAA</option>
+    <option value="KBL">Kabul, (Provincia de Kabul),  Afganistán. Aeropuerto code IATA: KBL</option>
+    <option value="KDH">Kandahar, (Provincia de Kandahar),  Afganistán. Aeropuerto code IATA: KDH</option>
+    <option value="MZR">Mazar-e Sarif, (Provincia de Balj),  Afganistán. Aeropuerto code IATA: MZR</option>
+    <option value="CGN">Colonia, Bonn, (Renania del Norte-Westfalia),  Alemania. Aeropuerto code IATA: CGN</option>
+    <option value="FRA">Fráncfort del Meno, (Hesse),  Alemania. Aeropuerto code IATA: FRA</option>
+    <option value="HAJ">Hannover, (Baja Sajonia),  Alemania. Aeropuerto code IATA: HAJ</option>
+    <option value="HAM">Hamburgo, (Hamburgo),  Alemania. Aeropuerto code IATA: HAM</option>
+    <option value="HGL">Heligoland, (Schleswig-Holstein),  Alemania. Aeropuerto code IATA: HGL</option>
+    <option value="HHN">Fráncfortnota 2​, (Renania del Norte-Westfalia),  Alemania. Aeropuerto code IATA: HHN</option>
+    <option value="MUC">Munich, (Baviera),  Alemania. Aeropuerto code IATA: MUC</option>
+    <option value="THF">Berlín, (Berlín),  Alemania. Aeropuerto code IATA: THF</option>
+    <option value="LAD">Luanda, (Provincia de Luanda),  Angola. Aeropuerto code IATA: LAD</option>
+    <option value="RUH">Riad, (Provincia de Riad),  Arabia Saudita. Aeropuerto code IATA: RUH</option>
+    <option value="AEP">Buenos Aires, (Buenos Aires),  Argentina. Aeropuerto code IATA: AEP</option>
+    <option value="AFA">San Rafael, (Mendoza),  Argentina. Aeropuerto code IATA: AFA</option>
+    <option value="AOL">Paso de los Libres, (Corrientes),  Argentina. Aeropuerto code IATA: AOL</option>
+    <option value="BRC">San Carlos de Bariloche, (Río Negro),  Argentina. Aeropuerto code IATA: BRC</option>
+    <option value="COR">Córdoba, (Córdoba),  Argentina. Aeropuerto code IATA: COR</option>
+    <option value="CLX">Clorinda, (Formosa),  Argentina. Aeropuerto code IATA: CLX</option>
+    <option value="CNQ">Ciudad de Corrientes, (Corrientes),  Argentina. Aeropuerto code IATA: CNQ</option>
+    <option value="COC">Concordia, (Entre Ríos),  Argentina. Aeropuerto code IATA: COC</option>
+    <option value="CTC">San Fernando del Valle de Catamarca, (Catamarca),  Argentina. Aeropuerto code IATA: CTC
+    </option>
+    <option value="EZE">Ezeiza, (Buenos Aires),  Argentina. Aeropuerto code IATA: EZE</option>
+    <option value="FDO">San Fernando, (Buenos Aires),  Argentina. Aeropuerto code IATA: FDO</option>
+    <option value="FMA">Ciudad de Formosa, (Formosa),  Argentina. Aeropuerto code IATA: FMA</option>
+    <option value="GHU">Gualeguaychú, (Entre Ríos),  Argentina. Aeropuerto code IATA: GHU</option>
+    <option value="GPO">General Pico, (La Pampa),  Argentina. Aeropuerto code IATA: GPO</option>
+    <option value="IRJ">Ciudad de La Rioja, (La Rioja),  Argentina. Aeropuerto code IATA: IRJ</option>
+    <option value="LGS">Malargüe, (Mendoza),  Argentina. Aeropuerto code IATA: LGS</option>
+    <option value="LUQ">Ciudad de San Luis, (San Luis),  Argentina. Aeropuerto code IATA: LUQ</option>
+    <option value="MCS">Monte Caseros, (Corrientes),  Argentina. Aeropuerto code IATA: MCS</option>
+    <option value="MDQ">Mar del Plata, (Buenos Aires),  Argentina. Aeropuerto code IATA: MDQ</option>
+    <option value="MDZ">Ciudad de Mendoza, (Mendoza),  Argentina. Aeropuerto code IATA: MDZ</option>
+    <option value="MDX">Mercedes, (Corrientes),  Argentina. Aeropuerto code IATA: MDX</option>
+    <option value="ORA">San Ramón de la Nueva Orán, (Salta),  Argentina. Aeropuerto code IATA: ORA</option>
+    <option value="OYA">Goya, (Corrientes),  Argentina. Aeropuerto code IATA: OYA</option>
+    <option value="PRA">Paraná, (Entre Ríos),  Argentina. Aeropuerto code IATA: PRA</option>
+    <option value="PRQ">Presidencia Roque Sáenz Peña, (Chaco),  Argentina. Aeropuerto code IATA: PRQ</option>
+    <option value="RES">Ciudad de Resistencia, (Chaco),  Argentina. Aeropuerto code IATA: RES</option>
+    <option value="RGA">Río Grande, (Tierra del Fuego),  Argentina. Aeropuerto code IATA: RGA</option>
+    <option value="RHD">Termas de Río Hondo, (Santiago del Estero),  Argentina. Aeropuerto code IATA: RHD</option>
+    <option value="RLO">Merlo, (San Luis),  Argentina. Aeropuerto code IATA: RLO</option>
+    <option value="ROS">Rosario, (Santa Fe),  Argentina. Aeropuerto code IATA: ROS</option>
+    <option value="RSA">Ciudad de Santa Rosa, (La Pampa),  Argentina. Aeropuerto code IATA: RSA</option>
+    <option value="SDE">Ciudad de Santiago del Estero, (Santiago del Estero),  Argentina. Aeropuerto code IATA: SDE
+    </option>
+    <option value="SFN">Santa Fe, (Santa Fe),  Argentina. Aeropuerto code IATA: SFN</option>
+    <option value="SLA">Ciudad de Salta, (Salta),  Argentina. Aeropuerto code IATA: SLA</option>
+    <option value="TTG">Tartagal, (Salta),  Argentina. Aeropuerto code IATA: TTG</option>
+    <option value="USH">Ushuaia, (Tierra del Fuego),  Argentina. Aeropuerto code IATA: USH</option>
+    <option value="UZU">Curuzú Cuatiá, (Corrientes),  Argentina. Aeropuerto code IATA: UZU</option>
+    <option value="VME">Villa Mercedes, (San Luis),  Argentina. Aeropuerto code IATA: VME</option>
+    <option value="NLK">Kingston, (Isla Norfolk),  Australia. Aeropuerto code IATA: NLK</option>
+    <option value="SYD">Sídney, (Nueva Gales del Sur),  Australia. Aeropuerto code IATA: SYD</option>
+    <option value="VIE">Viena, (Viena),  Austria. Aeropuerto code IATA: VIE</option>
+    <option value="JSR">Jessore (en), (Khulna),  Bangladés. Aeropuerto code IATA: JSR</option>
+    <option value="LGG">Lieja, (Región Valona),  Bélgica. Aeropuerto code IATA: LGG</option>
+    <option value="VVI">Santa Cruz de la Sierra, (Santa Cruz),  Bolivia. Aeropuerto code IATA: VVI</option>
+    <option value="LPB">La Paz,  Bolivia. Aeropuerto code IATA: LPB</option>
+    <option value="CBB">Cochabamba, Bolivia. Aeropuerto code IATA: CBB</option>
+    <option value="GRU">São Paulo, (São Paulo),  Brasil. Aeropuerto code IATA: GRU</option>
+    <option value="VCP">Sao Paulo, (São Paulo),  Brasil. Aeropuerto code IATA: VCP</option>
+    <option value="VDC">Bahia, (Bahía),  Brasil. Aeropuerto code IATA: VDC</option>
+    <option value="YFB">Iqaluit, (Nunavut),  Canadá. Aeropuerto code IATA: YFB</option>
+    <option value="YHU">Montreal, (Quebec),  Canadá. Aeropuerto code IATA: YHU</option>
+    <option value="YHZ">Halifax, (Nueva Escocia),  Canadá. Aeropuerto code IATA: YHZ</option>
+    <option value="YOW">Ottawa, (Ontario),  Canadá. Aeropuerto code IATA: YOW</option>
+    <option value="YQB">Quebec, (Quebec),  Canadá. Aeropuerto code IATA: YQB</option>
+    <option value="YRB">Resolute, (Nunavut),  Canadá. Aeropuerto code IATA: YRB</option>
+    <option value="YUL">Montreal, (Quebec),  Canadá. Aeropuerto code IATA: YUL</option>
+    <option value="YVM">Qikiqtarjuaq (en), (Nunavut),  Canadá. Aeropuerto code IATA: YVM</option>
+    <option value="YVR">Vancouver, (Columbia Británica),  Canadá. Aeropuerto code IATA: YVR</option>
+    <option value="YWG">Winnipeg, (Manitoba),  Canadá. Aeropuerto code IATA: YWG</option>
+    <option value="YYY">Mont-Joli, (Quebec),  Canadá. Aeropuerto code IATA: YYY</option>
+    <option value="YYZ">Toronto, (Ontario),  Canadá. Aeropuerto code IATA: YYZ</option>
+    <option value="DOH">Doha, (Municipio de Doha),  Catar. Aeropuerto code IATA: DOH</option>
+    <option value="ANF">Antofagasta, (Antofagasta),  Chile. Aeropuerto code IATA: ANF</option>
+    <option value="ARI">Arica, (Arica y Parinacota),  Chile. Aeropuerto code IATA: ARI</option>
+    <option value="BBA">Balmaceda, (Aysén),  Chile. Aeropuerto code IATA: BBA</option>
+    <option value="CCP">Concepción, (Biobío),  Chile. Aeropuerto code IATA: CCP</option>
+    <option value="ESR">El Salvador (Chile), (Atacama),  Chile. Aeropuerto code IATA: ESR</option>
+    <option value="IPC">Isla de Pascua, (Valparaíso),  Chile. Aeropuerto code IATA: IPC</option>
+    <option value="IQQ">Iquique, (Tarapacá),  Chile. Aeropuerto code IATA: IQQ</option>
+    <option value="PUQ">Punta Arenas, (Magallanes),  Chile. Aeropuerto code IATA: PUQ</option>
+    <option value="QRC">Rancagua, (O'Higgins),  Chile. Aeropuerto code IATA: QRC</option>
+    <option value="SCL">Santiago de Chile, (Metropolitana de Santiago),  Chile. Aeropuerto code IATA: SCL</option>
+    <option value="HKG">Hong Kong, (Región Administrativa Especial de Hong Kong),  China. Aeropuerto code IATA: HKG
+    </option>
+    <option value="MFM">Ciudad de Macao, (Macao),  China. Aeropuerto code IATA: MFM</option>
+    <option value="NIC">Nicosia, (Distrito de Nicosia),  Chipre nota 8​. Aeropuerto code IATA: NIC</option>
+    <option value="BOG">Bogotá, (Bogotá),  Colombia. Aeropuerto code IATA: BOG</option>
+    <option value="CLO">Cali, (Valle del cauca),  Colombia. Aeropuerto code IATA: CLO</option>
+    <option value="MDE">Rionegro, Medellín, (Antioquia),  Colombia. Aeropuerto code IATA: MDE</option>
+    <option value="ICN">Incheon, Seúl nota 3​, (Ciudad Metropolitana de Incheon),  Corea del Sur. Aeropuerto code IATA:
+        ICN</option>
+    <option value="LIR">Guanacaste, (Guanacaste),  Costa Rica. Aeropuerto code IATA: LIR</option>
+    <option value="SJO">San José, (GAM),  Costa Rica. Aeropuerto code IATA: SJO</option>
+    <option value="ZAG">Zagreb, (Condado de Zagreb),  Croacia. Aeropuerto code IATA: ZAG</option>
+    <option value="CCC">Cayo Coco, (Ciego de Ávila),  Cuba. Aeropuerto code IATA: CCC</option>
+    <option value="HAV">La Habana, (La Habana),  Cuba. Aeropuerto code IATA: HAV</option>
+    <option value="CUE">Cuenca, (Azuay),  Ecuador. Aeropuerto code IATA: CUE</option>
+    <option value="GYE">Guayaquil, (Guayas),  Ecuador. Aeropuerto code IATA: GYE</option>
+    <option value="MEC">Manta, (Manabí),  Ecuador. Aeropuerto code IATA: MEC</option>
+    <option value="UIO">Tababela, (Pichincha),  Ecuador. Aeropuerto code IATA: UIO</option>
+    <option value="SAL">San Salvador, (San Salvador),  El Salvador. Aeropuerto code IATA: SAL</option>
+    <option value="ABC">Albacete, (Castilla-La Mancha),  España. Aeropuerto code IATA: ABC</option>
+    <option value="AGP">Málaga, (Andalucía),  España. Aeropuerto code IATA: AGP</option>
+    <option value="BCN">Barcelona, (Cataluña),  España. Aeropuerto code IATA: BCN</option>
+    <option value="GRX">Granada, (Andalucía),  España. Aeropuerto code IATA: GRX</option>
+    <option value="IBZ">Ibiza, (Islas Baleares),  España. Aeropuerto code IATA: IBZ</option>
+    <option value="LEU">La Seu d'Urgell, Andorra la Vella nota 4​, (Cataluña),  España. Aeropuerto code IATA: LEU
+    </option>
+    <option value="MAD">Madrid, (Comunidad de Madrid),  España. Aeropuerto code IATA: MAD</option>
+    <option value="PNA">Noáin, (Navarra),  España. Aeropuerto code IATA: PNA</option>
+    <option value="QSA">Sabadell, (Cataluña),  España. Aeropuerto code IATA: QSA</option>
+    <option value="REU">Reus, Tarragona, (Cataluña),  España. Aeropuerto code IATA: REU</option>
+    <option value="RMU">Región de Murcia, (Región de Murcia),  España. Aeropuerto code IATA: RMU</option>
+    <option value="SVQ">Sevilla, (Andalucía),  España. Aeropuerto code IATA: SVQ</option>
+    <option value="TFN">Tenerife, (Canarias),  España. Aeropuerto code IATA: TFN</option>
+    <option value="TFS">Tenerife, (Canarias),  España. Aeropuerto code IATA: TFS</option>
+    <option value="VLC">Manises, (Comunidad Valenciana),  España. Aeropuerto code IATA: VLC</option>
+    <option value="VLL">Valladolid, (Castilla y León),  España. Aeropuerto code IATA: VLL</option>
+    <option value="XRY">Jerez, (Andalucía),  España. Aeropuerto code IATA: XRY</option>
+    <option value="ZAZ">Zaragoza, (Aragón),  España. Aeropuerto code IATA: ZAZ</option>
+    <option value="DAY">Dayton, (Ohio),  Estados Unidos. Aeropuerto code IATA: DAY</option>
+    <option value="EGE">Eagle-Vail, (Colorado),  Estados Unidos. Aeropuerto code IATA: EGE</option>
+    <option value="HNL">Honolulu, (Hawái),  Estados Unidos. Aeropuerto code IATA: HNL</option>
+    <option value="HOU">Houston, (Texas),  Estados Unidos. Aeropuerto code IATA: HOU</option>
+    <option value="JFK">Nueva York, (Nueva York),  Estados Unidos. Aeropuerto code IATA: JFK</option>
+    <option value="BOS">Bostón, (Logan),  Estados Unidos. Aeropuerto code IATA: BOS</option>
+    <option value="ROC">Rochester,  Estados Unidos. Aeropuerto code IATA: ROC</option>
+    <option value="RST">Rochester,  Estados Unidos. Aeropuerto code IATA: RST</option>
+    <option value="WAS">Washington, (Todos los aeropuertos),  Estados Unidos. Aeropuerto code IATA: WAS</option>
+    <option value="LAS">Las Vegas, (Nevada),  Estados Unidos. Aeropuerto code IATA: LAS</option>
+    <option value="LAX">Los Ángeles, (California),  Estados Unidos. Aeropuerto code IATA: LAX</option>
+    <option value="MIA">Miami, (Florida),  Estados Unidos. Aeropuerto code IATA: MIA</option>
+    <option value="MKC">Kansas City, (Misuri),  Estados Unidos. Aeropuerto code IATA: MKC</option>
+    <option value="MCO">Orlando, (Florida),  Estados Unidos. Aeropuerto code IATA: MCO</option>
+    <option value="PHL">Filadelfia, (Pensilvania),  Estados Unidos. Aeropuerto code IATA: PHL</option>
+    <option value="SFM">Sacramento, (California),  Estados Unidos. Aeropuerto code IATA: SFM</option>
+    <option value="HEL">Helsinki, (Uusimaa),  Finlandia. Aeropuerto code IATA: HEL</option>
+    <option value="IVL">Ivalo, (Laponia Finlandesa),  Finlandia. Aeropuerto code IATA: IVL</option>
+    <option value="TUR">Turku, (Finlandia del Sudoeste),  Finlandia. Aeropuerto code IATA: TUR</option>
+    <option value="OSL">Oslo, (Noruega),  Noruega. Aeropuerto code IATA: OSL</option>
+    <option value="BOD">Burdeos, (Aquitania),  Francia. Aeropuerto code IATA: BOD</option>
+    <option value="CDG">París, (Isla de Francia),  Francia. Aeropuerto code IATA: CDG</option>
+    <option value="EAP">Basilea, Mulhouse, Friburgo, (Alsacia),  Francia. Aeropuerto code IATA: EAP</option>
+    <option value="MLH">Basilea, Mulhouse, Friburgo, (Alsacia),  Francia. Aeropuerto code IATA: MLH</option>
+    <option value="ORY">París, (Isla de Francia),  Francia. Aeropuerto code IATA: ORY</option>
+    <option value="SXB">Estrasburgo, (Alsacia),  Francia. Aeropuerto code IATA: SXB</option>
+    <option value="TLS">Toulouse, (Occitania),  Francia. Aeropuerto code IATA: TLS</option>
+    <option value="CLY">Calvi-Sainte-Catherine, (Córsega),  Francia. Aeropuerto code IATA: CLY</option>
+    <option value="BIA">Bastia-Poretta, (Córsega),  Francia. Aeropuerto code IATA: BIA</option>
+    <option value="AJA">Ajaccio-Napoléon Bonaparte, (Córsega),  Francia. Aeropuerto code IATA: AJA</option>
+    <option value="FSC">Figari Sud-Corse, (Córsega),  Francia. Aeropuerto code IATA: FSC</option>
+    <option value="ATH">Atenas, (Ática),  Grecia. Aeropuerto code IATA: ATH</option>
+    <option value="JKL">Pothia (en), (Egeo Meridional),  Grecia. Aeropuerto code IATA: JKL</option>
+    <option value="SKG">Tesalónica, (Macedonia Central),  Grecia. Aeropuerto code IATA: SKG</option>
+    <option value="FRS">Santa Elena de la Cruz, (Petén),  Guatemala. Aeropuerto code IATA: FRS</option>
+    <option value="GUA">Ciudad de Guatemala, (Guatemala),  Guatemala. Aeropuerto code IATA: GUA</option>
+    <option value="PBR">Puerto Barrios, (Izabal),  Guatemala. Aeropuerto code IATA: PBR</option>
+    <option value="SAP">San Pedro Sula, (Cortés),  Honduras. Aeropuerto code IATA: SAP</option>
+    <option value="TGU">Tegucigalpa, (Francisco Morazán),  Honduras. Aeropuerto code IATA: TGU</option>
+    <option value="BUD">Budapest, (Budapest),  Hungría. Aeropuerto code IATA: BUD</option>
+    <option value="QGY">Györ, (Győr-Moson-Sopron),  Hungría. Aeropuerto code IATA: QGY</option>
+    <option value="HBX">Hubballi, Dharwad, (Karnataka),  India. Aeropuerto code IATA: HBX</option>
+    <option value="ORK">Cork, (Munster),  Irlanda. Aeropuerto code IATA: ORK</option>
+    <option value="KEF">Reikiavik, (Höfuðborgarsvæðið),  Islandia. Aeropuerto code IATA: KEF</option>
+    <option value="HIR">Honiara, (Honiara),  Islas Salomón. Aeropuerto code IATA: HIR</option>
+    <option value="TLV">Tel Aviv, (Distrito Central),  Israel. Aeropuerto code IATA: TLV</option>
+    <option value="FCO">Roma, (Lacio),  Italia. Aeropuerto code IATA: FCO</option>
+    <option value="FLR">Florencia, (Toscana),  Italia. Aeropuerto code IATA: FLR</option>
+    <option value="NAP">Nápoles, (Campania),  Italia. Aeropuerto code IATA: NAP</option>
+    <option value="BRI">Bari, (Puglia),  Italia. Aeropuerto code IATA: BRI</option>
+    <option value="PMO">Palermo, (Sicilia),  Italia. Aeropuerto code IATA: PMO</option>
+    <option value="CTA">Catania, (Sicilia),  Italia. Aeropuerto code IATA: CTA</option>
+    <option value="TRS">Trieste, (Friuli-Venecia Julia),  Italia. Aeropuerto code IATA: TRS</option>
+    <option value="AHO">Alghero, (Sardegna),  Italia. Aeropuerto code IATA: AHO</option>
+    <option value="CAG">Cagliari, (Sardegna),  Italia. Aeropuerto code IATA: CAG</option>
+    <option value="OLB">Olbia, (Sardegna),  Italia. Aeropuerto code IATA: OLB</option>
+    <option value="HND">Tokio, (Tokio),  Japón. Aeropuerto code IATA: HND</option>
+    <option value="CMN">Casablanca, (Región de Casablanca-Settat),  Marruecos. Aeropuerto code IATA: CMN</option>
+    <option value="RAK">Marrakech, (Marrakech-Safí),  Marruecos. Aeropuerto code IATA: RAK</option>
+    <option value="RRG">Rodrigues, (Rodrigues),  Mauricio. Aeropuerto code IATA: RRG</option>
+    <option value="MGA">Managua, (Managua),  Nicaragua. Aeropuerto code IATA: MGA</option>
+    <option value="WLG">Wellington, (Wellington),  Nueva Zelanda. Aeropuerto code IATA: WLG</option>
+    <option value="AMS">Ámsterdam, (Holanda Septentrional),  Países Bajos. Aeropuerto code IATA: AMS</option>
+    <option value="AUA">Oranjestad, (Aruba),  Países Bajos. Aeropuerto code IATA: AUA</option>
+    <option value="EIN">Eindhoven, (Brabante Septentrional),  Países Bajos. Aeropuerto code IATA: EIN</option>
+    <option value="BYJ">Beja, (Alentejo),  Portugal. Aeropuerto code IATA: BYJ</option>
+    <option value="CVU">Isla de Corvo, (Islas Azores),  Portugal. Aeropuerto code IATA: CVU</option>
+    <option value="FAO">Faro, (Algarve),  Portugal. Aeropuerto code IATA: FAO</option>
+    <option value="FLW">Isla de Flores, (Islas Azores),  Portugal. Aeropuerto code IATA: FLW</option>
+    <option value="FNC">Funchal, (Madeira),  Portugal. Aeropuerto code IATA: FNC</option>
+    <option value="GRW">Isla Graciosa, (Islas Azores),  Portugal. Aeropuerto code IATA: GRW</option>
+    <option value="HOR">Isla de Faial, (Islas Azores),  Portugal. Aeropuerto code IATA: HOR</option>
+    <option value="LIS">Lisboa, (Lisboa),  Portugal. Aeropuerto code IATA: LIS</option>
+    <option value="OPO">Oporto, (Región Norte),  Portugal. Aeropuerto code IATA: OPO</option>
+    <option value="PDL">Isla de São Miguel, (Islas Azores),  Portugal. Aeropuerto code IATA: PDL</option>
+    <option value="PIX">Isla del Pico, (Islas Azores),  Portugal. Aeropuerto code IATA: PIX</option>
+    <option value="PXO">Isla de Porto Santo, (Madeira),  Portugal. Aeropuerto code IATA: PXO</option>
+    <option value="SJZ">Isla de São Jorge, (Islas Azores),  Portugal. Aeropuerto code IATA: SJZ</option>
+    <option value="SMA">Isla de Santa Maria, (Islas Azores),  Portugal. Aeropuerto code IATA: SMA</option>
+    <option value="TER">Isla Terceira, (Islas Azores),  Portugal. Aeropuerto code IATA: TER</option>
+    <option value="EDI">Edimburgo, (Escocia),  Reino Unido. Aeropuerto code IATA: EDI</option>
+    <option value="GIB">Gibraltar, (Gibraltar),  Reino Unido. Aeropuerto code IATA: GIB</option>
+    <option value="INV">Inverness, (Escocia),  Reino Unido. Aeropuerto code IATA: INV</option>
+    <option value="JER">Saint Helier, (Jersey),  Reino Unido. Aeropuerto code IATA: JER</option>
+    <option value="LHR">Londres, (Inglaterra),  Reino Unido. Aeropuerto code IATA: LHR</option>
+    <option value="LTN">Londres, (Inglaterra),  Reino Unido. Aeropuerto code IATA: LTN</option>
+    <option value="PSY">Puerto Argentino/Stanley, (Islas Malvinas),  Reino Unido. Aeropuerto code IATA: PSY</option>
+    <option value="MPN">Isla Soledad, (Islas Malvinas),  Reino Unidonota 7​. Aeropuerto code IATA: MPN</option>
+    <option value="SDQ">Santo Domingo, (Santo Domingo),  República Dominicana. Aeropuerto code IATA: SDQ</option>
+    <option value="SIN">Singapur, (Consejo del Sudeste nota 9​),  Singapur. Aeropuerto code IATA: SIN</option>
+    <option value="TPE">Taipéi, (Taoyuan),  Taiwán nota 10​. Aeropuerto code IATA: TPE</option>
+    <option value="DJE">Yerba, (Medenine),  Túnez. Aeropuerto code IATA: DJE</option>
+    <option value="IST">Estambul, (Provincia de Estambul),  Turquía. Aeropuerto code IATA: IST</option>
+    <option value="FOR">Fortaleza, (Ceará), Brasil. Aeropuerto code IATA: FOR</option>
+    <option value="DXB">Dubái, (Dubái), Emiratos Árabes Unidos. Aeropuerto code IATA: DXB</option>
+    <option value="BIO">Bilbao, (Vizcaya), España. Aeropuerto code IATA: BIO</option>
+    <option value="CDT">Castellon, (Comunidad Valenciana), España. Aeropuerto code IATA: CDT</option>
+    <option value="MLN">Melilla, (Melilla), España. Aeropuerto code IATA: MLN</option>
+    <option value="VGO">Vigo, (Galicia), España. Aeropuerto code IATA: VGO</option>
+    <option value="ORD">Chicago, (Illinois), Estados Unidos. Aeropuerto code IATA: ORD</option>
+    <option value="MXP">Milán, (Lombardía), Italia. Aeropuerto code IATA: MXP</option>
+    <option value="TSE">Astaná, (Provincia de Akmola), Kazajistán. Aeropuerto code IATA: TSE</option>
+    <option value="CUU">Chihuahua, (Chihuahua), México. Aeropuerto code IATA: CUU</option>
+    <option value="GDL">Guadalajara, Jalisco, (Jalisco), México. Aeropuerto code IATA: GDL</option>
+    <option value="HMO">Hermosillo, (Sonora), México. Aeropuerto code IATA: HMO</option>
+    <option value="MTY">Monterrey, (Nuevo León), México. Aeropuerto code IATA: MTY</option>
+    <option value="MEX">Ciudad de México, (México), México. Aeropuerto code IATA: MEX</option>
+    <option value="PTY">Ciudad de Panamá, (Provincia de Panamá), Panamá. Aeropuerto code IATA: PTY</option>
+    <option value="AGT">Ciudad del Este, (Alto Paraná), Paraguay. Aeropuerto code IATA: AGT</option>
+    <option value="ASU">Asunción, (Central), Paraguay. Aeropuerto code IATA: ASU</option>
+    <option value="ENO">Encarnacion (Paraguay), (Itapúa), Paraguay. Aeropuerto code IATA: ENO</option>
+    <option value="PJC">Pedro Juan Caballero (Paraguay), (Amambay), Paraguay. Aeropuerto code IATA: PJC</option>
+    <option value="LIM">Lima nota 5​, Callao nota 6​., (Callao), Perú. Aeropuerto code IATA: LIM</option>
+    <option value="PUJ">La Altagracia, (Plantilla:RD), Plantilla:RD. Aeropuerto code IATA: PUJ</option>
+    <option value="SBZ">Sibiu, (Distrito de Sibiu), Rumania. Aeropuerto code IATA: SBZ</option>
+    <option value="DME">Moscú, (Óblast de Moscú), Rusia. Aeropuerto code IATA: DME</option>
+    <option value="KGD">Kaliningrado, (Óblast de Kaliningrado), Rusia. Aeropuerto code IATA: KGD</option>
+    <option value="ARN">Estocolmo, (Estocolmo), Suecia. Aeropuerto code IATA: ARN</option>
+    <option value="MVD">Montevideo, (Montevideo), Uruguay. Aeropuerto code IATA: MVD</option>
+    <option value="PDP">Maldonado y Punta del Este, (Maldonado), Uruguay. Aeropuerto code IATA: PDP</option>
+    <option value="CCS">Caracas, (Dependencias Federales), Venezuela. Aeropuerto code IATA: CCS</option>
+    <option value="TGD">Montenegro, (Montenegro), . Aeropuerto code IATA: TGD</option>
+    <option value="CPT">Ciudad del Cabo, Sudafrica. Aeropuerto code IATA: CPT</option>
+    <option value="JNB">Johannesburgo, Sudafrica. Aeropuerto code IATA: JNB</option>
+    <option value="BFN">Bloemfontein, Sudafrica. Aeropuerto code IATA: BFN</option>
+    <option value="NTY">Ciudad del sol, Sudafrica. Aeropuerto code IATA: NTY</option>
+    <option value="DUR">Durban, Sudafrica. Aeropuerto code IATA: DUR</option>
+    <option value="ELS">East London, Sudafrica. Aeropuerto code IATA: ELS</option>
+    <option value="GRJ">George, Sudafrica. Aeropuerto code IATA: GRJ</option>
+    <option value="HDS">Hoedspruit, Sudafrica. Aeropuerto code IATA: HDS</option>
+    <option value="KIM">Kimberley, Sudafrica. Aeropuerto code IATA: KIM</option>
+    <option value="PHW">Phalaborwa, Sudafrica. Aeropuerto code IATA: PHW</option>
+    <option value="PZB">Pietermaritzburg, Sudafrica. Aeropuerto code IATA: PZB</option>
+    <option value="PTG">Polokwane, Sudafrica. Aeropuerto code IATA: PTG</option>
+    <option value="PLZ">Port Elizabeth, Sudafrica. Aeropuerto code IATA: PLZ</option>
+    <option value="RCB">Richards Bay, Sudafrica. Aeropuerto code IATA: RCB</option>
+    <option value="SZK">Skukuza, Sudafrica. Aeropuerto code IATA: SZK</option>
+    <option value="UTT">Umtata, Sudafrica. Aeropuerto code IATA: UTT</option>
+    <option value="UTN">Upington, Sudafrica. Aeropuerto code IATA: UTN</option>
+    <option value="ADD">Adís Abeba, Etiopia. Aeropuerto code IATA: ADD</option>
+</select>
+
+<br>
+
+
+<h2>Destino:</h2>
+<select name="hasta" id="hasta" multiple="multiple">
+    <option value="BUE">Bs As</option>
+    <option value="MDZ">Mendoza</option>
+    <option value="COR">Cordoba</option>
+    <option value="ROS">Rosario</option>
+    <option value="SCL">Santiago de Chile</option>
+    <option value="MAD">Madrid</option>
+    <option value="BCN">Barcelona</option>
+    <option value="VLC">Valencia</option>
+    <option value="LIS">Lisboa</option>
+    <option value="OPO">Porto</option>
+    <option value="ROM">Roma</option>
+    <option value="MIL">Milán</option>
+    <option value="VCE">Venecia</option>
+    <option value="TRN">Torino</option>
+    <option value="TRS">Trieste</option>
+    <option value="ZAG">Zagreb</option>
+    <option value="SPU">Split</option>
+    <option value="LON">Londres</option>
+    <option value="AMS">Amsterdam</option>
+    <option value="BER">Berlin1</option>
+    <option value="SXF">Berlin2</option>
+    <option value="FRA">Frankfurt</option>
+    <option value="DUS">Dusseldorf</option>
+    <option value="ZRH">Zurich, Suiza</option>
+    <option value="GVA">Ginebra, Suiza</option>
+    <option value="BRN">Berna, Suiza</option>
+    <option value="BSL">Basilea, Suiza</option>
+    <option value="CDG">París</option>
+    <option value="LYS">Lyon</option>
+    <option value="BRU">Bruselas</option>
+    <option value="MVD">Montevideo</option>
+    <option value="LJU">LjubljanaBrnik</option>
+    <option value="LIM">Lima</option>
+    <option value="BOG">Bogotà</option>
+    <option value="SAO">San Pablo</option>
+    <option value="RIO">Rìo de Janeiro</option>
+    <option value="REC">Recife</option>
+    <option value="MCZ">Maceio</option>
+    <option value="SSA">Salvador de Bahía</option>
+    <option value="FOR">Fortaleza</option>
+    <option value="IGU">Foz do Iguazu</option>
+    <option value="BEL">Belém</option>
+    <option value="BHZ">Belo Horizonte</option>
+    <option value="BSB">Brasilia</option>
+    <option value="NAT">Natal</option>
+    <option value="POA">Porto Alegre</option>
+    <option value="VRN">Verona</option>
+    <option value="BLQ">Bolonia</option>
+    <option value="PTY">Panamà</option>
+    <option value="MEX">México</option>
+    <option value="CUN">Cancún</option>
+    <option value="DUB">Dublin</option>
+    <option value="IGR">Iguazu</option>
+    <option value="FTE">El Calafate</option>
+    <option value="USH">Ushuaia</option>
+    <option value="TUC">Tucuman</option>
+    <option value="SLA">Salta</option>
+    <option value="PUJ">Punta Cana</option>
+    <option value="YUL">Montreal</option>
+    <option value="NYC">Nueva York (todos los aeropuertos)</option>
+    <option value="MIA">Miami</option>
+    <option value="FAO">Faro, Portugal</option>
+    <option value="PXO">Porto Santo, Portugal</option>
+    <option value="BIN">Bamiyán, (Provincia de Bamiyán),  Afganistán. Aeropuerto code IATA: BIN</option>
+    <option value="BPM">Bagram, (Provincia de Parwan),  Afganistán. Aeropuerto code IATA: BPM</option>
+    <option value="BST">Lashkar Gah, (Provincia de Helmand),  Afganistán. Aeropuerto code IATA: BST</option>
+    <option value="FBD">Fayzabad, (Provincia de Badajshan),  Afganistán. Aeropuerto code IATA: FBD</option>
+    <option value="HEA">Herat, (Provincia de Herat),  Afganistán. Aeropuerto code IATA: HEA</option>
+    <option value="JAA">Jalalabad, (Provincia de Nangar),  Afganistán. Aeropuerto code IATA: JAA</option>
+    <option value="KBL">Kabul, (Provincia de Kabul),  Afganistán. Aeropuerto code IATA: KBL</option>
+    <option value="KDH">Kandahar, (Provincia de Kandahar),  Afganistán. Aeropuerto code IATA: KDH</option>
+    <option value="MZR">Mazar-e Sarif, (Provincia de Balj),  Afganistán. Aeropuerto code IATA: MZR</option>
+    <option value="CGN">Colonia, Bonn, (Renania del Norte-Westfalia),  Alemania. Aeropuerto code IATA: CGN</option>
+    <option value="FRA">Fráncfort del Meno, (Hesse),  Alemania. Aeropuerto code IATA: FRA</option>
+    <option value="HAJ">Hannover, (Baja Sajonia),  Alemania. Aeropuerto code IATA: HAJ</option>
+    <option value="HAM">Hamburgo, (Hamburgo),  Alemania. Aeropuerto code IATA: HAM</option>
+    <option value="HGL">Heligoland, (Schleswig-Holstein),  Alemania. Aeropuerto code IATA: HGL</option>
+    <option value="HHN">Fráncfortnota 2​, (Renania del Norte-Westfalia),  Alemania. Aeropuerto code IATA: HHN</option>
+    <option value="MUC">Munich, (Baviera),  Alemania. Aeropuerto code IATA: MUC</option>
+    <option value="THF">Berlín, (Berlín),  Alemania. Aeropuerto code IATA: THF</option>
+    <option value="LAD">Luanda, (Provincia de Luanda),  Angola. Aeropuerto code IATA: LAD</option>
+    <option value="RUH">Riad, (Provincia de Riad),  Arabia Saudita. Aeropuerto code IATA: RUH</option>
+    <option value="AEP">Buenos Aires, (Buenos Aires),  Argentina. Aeropuerto code IATA: AEP</option>
+    <option value="AFA">San Rafael, (Mendoza),  Argentina. Aeropuerto code IATA: AFA</option>
+    <option value="AOL">Paso de los Libres, (Corrientes),  Argentina. Aeropuerto code IATA: AOL</option>
+    <option value="BRC">San Carlos de Bariloche, (Río Negro),  Argentina. Aeropuerto code IATA: BRC</option>
+    <option value="COR">Córdoba, (Córdoba),  Argentina. Aeropuerto code IATA: COR</option>
+    <option value="CLX">Clorinda, (Formosa),  Argentina. Aeropuerto code IATA: CLX</option>
+    <option value="CNQ">Ciudad de Corrientes, (Corrientes),  Argentina. Aeropuerto code IATA: CNQ</option>
+    <option value="COC">Concordia, (Entre Ríos),  Argentina. Aeropuerto code IATA: COC</option>
+    <option value="CTC">San Fernando del Valle de Catamarca, (Catamarca),  Argentina. Aeropuerto code IATA: CTC
+    </option>
+    <option value="EZE">Ezeiza, (Buenos Aires),  Argentina. Aeropuerto code IATA: EZE</option>
+    <option value="FDO">San Fernando, (Buenos Aires),  Argentina. Aeropuerto code IATA: FDO</option>
+    <option value="FMA">Ciudad de Formosa, (Formosa),  Argentina. Aeropuerto code IATA: FMA</option>
+    <option value="GHU">Gualeguaychú, (Entre Ríos),  Argentina. Aeropuerto code IATA: GHU</option>
+    <option value="GPO">General Pico, (La Pampa),  Argentina. Aeropuerto code IATA: GPO</option>
+    <option value="IRJ">Ciudad de La Rioja, (La Rioja),  Argentina. Aeropuerto code IATA: IRJ</option>
+    <option value="LGS">Malargüe, (Mendoza),  Argentina. Aeropuerto code IATA: LGS</option>
+    <option value="LUQ">Ciudad de San Luis, (San Luis),  Argentina. Aeropuerto code IATA: LUQ</option>
+    <option value="MCS">Monte Caseros, (Corrientes),  Argentina. Aeropuerto code IATA: MCS</option>
+    <option value="MDQ">Mar del Plata, (Buenos Aires),  Argentina. Aeropuerto code IATA: MDQ</option>
+    <option value="MDZ">Ciudad de Mendoza, (Mendoza),  Argentina. Aeropuerto code IATA: MDZ</option>
+    <option value="MDX">Mercedes, (Corrientes),  Argentina. Aeropuerto code IATA: MDX</option>
+    <option value="ORA">San Ramón de la Nueva Orán, (Salta),  Argentina. Aeropuerto code IATA: ORA</option>
+    <option value="OYA">Goya, (Corrientes),  Argentina. Aeropuerto code IATA: OYA</option>
+    <option value="PRA">Paraná, (Entre Ríos),  Argentina. Aeropuerto code IATA: PRA</option>
+    <option value="PRQ">Presidencia Roque Sáenz Peña, (Chaco),  Argentina. Aeropuerto code IATA: PRQ</option>
+    <option value="RES">Ciudad de Resistencia, (Chaco),  Argentina. Aeropuerto code IATA: RES</option>
+    <option value="RGA">Río Grande, (Tierra del Fuego),  Argentina. Aeropuerto code IATA: RGA</option>
+    <option value="RHD">Termas de Río Hondo, (Santiago del Estero),  Argentina. Aeropuerto code IATA: RHD</option>
+    <option value="RLO">Merlo, (San Luis),  Argentina. Aeropuerto code IATA: RLO</option>
+    <option value="ROS">Rosario, (Santa Fe),  Argentina. Aeropuerto code IATA: ROS</option>
+    <option value="RSA">Ciudad de Santa Rosa, (La Pampa),  Argentina. Aeropuerto code IATA: RSA</option>
+    <option value="SDE">Ciudad de Santiago del Estero, (Santiago del Estero),  Argentina. Aeropuerto code IATA: SDE
+    </option>
+    <option value="SFN">Santa Fe, (Santa Fe),  Argentina. Aeropuerto code IATA: SFN</option>
+    <option value="SLA">Ciudad de Salta, (Salta),  Argentina. Aeropuerto code IATA: SLA</option>
+    <option value="TTG">Tartagal, (Salta),  Argentina. Aeropuerto code IATA: TTG</option>
+    <option value="USH">Ushuaia, (Tierra del Fuego),  Argentina. Aeropuerto code IATA: USH</option>
+    <option value="UZU">Curuzú Cuatiá, (Corrientes),  Argentina. Aeropuerto code IATA: UZU</option>
+    <option value="VME">Villa Mercedes, (San Luis),  Argentina. Aeropuerto code IATA: VME</option>
+    <option value="NLK">Kingston, (Isla Norfolk),  Australia. Aeropuerto code IATA: NLK</option>
+    <option value="SYD">Sídney, (Nueva Gales del Sur),  Australia. Aeropuerto code IATA: SYD</option>
+    <option value="VIE">Viena, (Viena),  Austria. Aeropuerto code IATA: VIE</option>
+    <option value="JSR">Jessore (en), (Khulna),  Bangladés. Aeropuerto code IATA: JSR</option>
+    <option value="LGG">Lieja, (Región Valona),  Bélgica. Aeropuerto code IATA: LGG</option>
+    <option value="VVI">Santa Cruz de la Sierra, (Santa Cruz),  Bolivia. Aeropuerto code IATA: VVI</option>
+    <option value="LPB">La Paz,  Bolivia. Aeropuerto code IATA: LPB</option>
+    <option value="CBB">Cochabamba, Bolivia. Aeropuerto code IATA: CBB</option>
+    <option value="GRU">São Paulo, (São Paulo),  Brasil. Aeropuerto code IATA: GRU</option>
+    <option value="VCP">Sao Paulo, (São Paulo),  Brasil. Aeropuerto code IATA: VCP</option>
+    <option value="VDC">Bahia, (Bahía),  Brasil. Aeropuerto code IATA: VDC</option>
+    <option value="YFB">Iqaluit, (Nunavut),  Canadá. Aeropuerto code IATA: YFB</option>
+    <option value="YHU">Montreal, (Quebec),  Canadá. Aeropuerto code IATA: YHU</option>
+    <option value="YHZ">Halifax, (Nueva Escocia),  Canadá. Aeropuerto code IATA: YHZ</option>
+    <option value="YOW">Ottawa, (Ontario),  Canadá. Aeropuerto code IATA: YOW</option>
+    <option value="YQB">Quebec, (Quebec),  Canadá. Aeropuerto code IATA: YQB</option>
+    <option value="YRB">Resolute, (Nunavut),  Canadá. Aeropuerto code IATA: YRB</option>
+    <option value="YUL">Montreal, (Quebec),  Canadá. Aeropuerto code IATA: YUL</option>
+    <option value="YVM">Qikiqtarjuaq (en), (Nunavut),  Canadá. Aeropuerto code IATA: YVM</option>
+    <option value="YVR">Vancouver, (Columbia Británica),  Canadá. Aeropuerto code IATA: YVR</option>
+    <option value="YWG">Winnipeg, (Manitoba),  Canadá. Aeropuerto code IATA: YWG</option>
+    <option value="YYY">Mont-Joli, (Quebec),  Canadá. Aeropuerto code IATA: YYY</option>
+    <option value="YYZ">Toronto, (Ontario),  Canadá. Aeropuerto code IATA: YYZ</option>
+    <option value="DOH">Doha, (Municipio de Doha),  Catar. Aeropuerto code IATA: DOH</option>
+    <option value="ANF">Antofagasta, (Antofagasta),  Chile. Aeropuerto code IATA: ANF</option>
+    <option value="ARI">Arica, (Arica y Parinacota),  Chile. Aeropuerto code IATA: ARI</option>
+    <option value="BBA">Balmaceda, (Aysén),  Chile. Aeropuerto code IATA: BBA</option>
+    <option value="CCP">Concepción, (Biobío),  Chile. Aeropuerto code IATA: CCP</option>
+    <option value="ESR">El Salvador (Chile), (Atacama),  Chile. Aeropuerto code IATA: ESR</option>
+    <option value="IPC">Isla de Pascua, (Valparaíso),  Chile. Aeropuerto code IATA: IPC</option>
+    <option value="IQQ">Iquique, (Tarapacá),  Chile. Aeropuerto code IATA: IQQ</option>
+    <option value="PUQ">Punta Arenas, (Magallanes),  Chile. Aeropuerto code IATA: PUQ</option>
+    <option value="QRC">Rancagua, (O'Higgins),  Chile. Aeropuerto code IATA: QRC</option>
+    <option value="SCL">Santiago de Chile, (Metropolitana de Santiago),  Chile. Aeropuerto code IATA: SCL</option>
+    <option value="HKG">Hong Kong, (Región Administrativa Especial de Hong Kong),  China. Aeropuerto code IATA: HKG
+    </option>
+    <option value="MFM">Ciudad de Macao, (Macao),  China. Aeropuerto code IATA: MFM</option>
+    <option value="NIC">Nicosia, (Distrito de Nicosia),  Chipre nota 8​. Aeropuerto code IATA: NIC</option>
+    <option value="BOG">Bogotá, (Bogotá),  Colombia. Aeropuerto code IATA: BOG</option>
+    <option value="CLO">Cali, (Valle del cauca),  Colombia. Aeropuerto code IATA: CLO</option>
+    <option value="MDE">Rionegro, Medellín, (Antioquia),  Colombia. Aeropuerto code IATA: MDE</option>
+    <option value="ICN">Incheon, Seúl nota 3​, (Ciudad Metropolitana de Incheon),  Corea del Sur. Aeropuerto code IATA:
+        ICN</option>
+    <option value="LIR">Guanacaste, (Guanacaste),  Costa Rica. Aeropuerto code IATA: LIR</option>
+    <option value="SJO">San José, (GAM),  Costa Rica. Aeropuerto code IATA: SJO</option>
+    <option value="ZAG">Zagreb, (Condado de Zagreb),  Croacia. Aeropuerto code IATA: ZAG</option>
+    <option value="CCC">Cayo Coco, (Ciego de Ávila),  Cuba. Aeropuerto code IATA: CCC</option>
+    <option value="HAV">La Habana, (La Habana),  Cuba. Aeropuerto code IATA: HAV</option>
+    <option value="CUE">Cuenca, (Azuay),  Ecuador. Aeropuerto code IATA: CUE</option>
+    <option value="GYE">Guayaquil, (Guayas),  Ecuador. Aeropuerto code IATA: GYE</option>
+    <option value="MEC">Manta, (Manabí),  Ecuador. Aeropuerto code IATA: MEC</option>
+    <option value="UIO">Tababela, (Pichincha),  Ecuador. Aeropuerto code IATA: UIO</option>
+    <option value="SAL">San Salvador, (San Salvador),  El Salvador. Aeropuerto code IATA: SAL</option>
+    <option value="ABC">Albacete, (Castilla-La Mancha),  España. Aeropuerto code IATA: ABC</option>
+    <option value="AGP">Málaga, (Andalucía),  España. Aeropuerto code IATA: AGP</option>
+    <option value="BCN">Barcelona, (Cataluña),  España. Aeropuerto code IATA: BCN</option>
+    <option value="GRX">Granada, (Andalucía),  España. Aeropuerto code IATA: GRX</option>
+    <option value="IBZ">Ibiza, (Islas Baleares),  España. Aeropuerto code IATA: IBZ</option>
+    <option value="LEU">La Seu d'Urgell, Andorra la Vella nota 4​, (Cataluña),  España. Aeropuerto code IATA: LEU
+    </option>
+    <option value="MAD">Madrid, (Comunidad de Madrid),  España. Aeropuerto code IATA: MAD</option>
+    <option value="PNA">Noáin, (Navarra),  España. Aeropuerto code IATA: PNA</option>
+    <option value="QSA">Sabadell, (Cataluña),  España. Aeropuerto code IATA: QSA</option>
+    <option value="REU">Reus, Tarragona, (Cataluña),  España. Aeropuerto code IATA: REU</option>
+    <option value="RMU">Región de Murcia, (Región de Murcia),  España. Aeropuerto code IATA: RMU</option>
+    <option value="SVQ">Sevilla, (Andalucía),  España. Aeropuerto code IATA: SVQ</option>
+    <option value="TFN">Tenerife, (Canarias),  España. Aeropuerto code IATA: TFN</option>
+    <option value="TFS">Tenerife, (Canarias),  España. Aeropuerto code IATA: TFS</option>
+    <option value="VLC">Manises, (Comunidad Valenciana),  España. Aeropuerto code IATA: VLC</option>
+    <option value="VLL">Valladolid, (Castilla y León),  España. Aeropuerto code IATA: VLL</option>
+    <option value="XRY">Jerez, (Andalucía),  España. Aeropuerto code IATA: XRY</option>
+    <option value="ZAZ">Zaragoza, (Aragón),  España. Aeropuerto code IATA: ZAZ</option>
+    <option value="DAY">Dayton, (Ohio),  Estados Unidos. Aeropuerto code IATA: DAY</option>
+    <option value="EGE">Eagle-Vail, (Colorado),  Estados Unidos. Aeropuerto code IATA: EGE</option>
+    <option value="HNL">Honolulu, (Hawái),  Estados Unidos. Aeropuerto code IATA: HNL</option>
+    <option value="HOU">Houston, (Texas),  Estados Unidos. Aeropuerto code IATA: HOU</option>
+    <option value="JFK">Nueva York, (Nueva York),  Estados Unidos. Aeropuerto code IATA: JFK</option>
+    <option value="BOS">Bostón, (Logan),  Estados Unidos. Aeropuerto code IATA: BOS</option>
+    <option value="ROC">Rochester,  Estados Unidos. Aeropuerto code IATA: ROC</option>
+    <option value="RST">Rochester,  Estados Unidos. Aeropuerto code IATA: RST</option>
+    <option value="WAS">Washington, (Todos los aeropuertos),  Estados Unidos. Aeropuerto code IATA: WAS</option>
+    <option value="LAS">Las Vegas, (Nevada),  Estados Unidos. Aeropuerto code IATA: LAS</option>
+    <option value="LAX">Los Ángeles, (California),  Estados Unidos. Aeropuerto code IATA: LAX</option>
+    <option value="MIA">Miami, (Florida),  Estados Unidos. Aeropuerto code IATA: MIA</option>
+    <option value="MKC">Kansas City, (Misuri),  Estados Unidos. Aeropuerto code IATA: MKC</option>
+    <option value="MCO">Orlando, (Florida),  Estados Unidos. Aeropuerto code IATA: MCO</option>
+    <option value="PHL">Filadelfia, (Pensilvania),  Estados Unidos. Aeropuerto code IATA: PHL</option>
+    <option value="SFM">Sacramento, (California),  Estados Unidos. Aeropuerto code IATA: SFM</option>
+    <option value="HEL">Helsinki, (Uusimaa),  Finlandia. Aeropuerto code IATA: HEL</option>
+    <option value="IVL">Ivalo, (Laponia Finlandesa),  Finlandia. Aeropuerto code IATA: IVL</option>
+    <option value="TUR">Turku, (Finlandia del Sudoeste),  Finlandia. Aeropuerto code IATA: TUR</option>
+    <option value="OSL">Oslo, (Noruega),  Noruega. Aeropuerto code IATA: OSL</option>
+    <option value="BOD">Burdeos, (Aquitania),  Francia. Aeropuerto code IATA: BOD</option>
+    <option value="CDG">París, (Isla de Francia),  Francia. Aeropuerto code IATA: CDG</option>
+    <option value="EAP">Basilea, Mulhouse, Friburgo, (Alsacia),  Francia. Aeropuerto code IATA: EAP</option>
+    <option value="MLH">Basilea, Mulhouse, Friburgo, (Alsacia),  Francia. Aeropuerto code IATA: MLH</option>
+    <option value="ORY">París, (Isla de Francia),  Francia. Aeropuerto code IATA: ORY</option>
+    <option value="SXB">Estrasburgo, (Alsacia),  Francia. Aeropuerto code IATA: SXB</option>
+    <option value="TLS">Toulouse, (Occitania),  Francia. Aeropuerto code IATA: TLS</option>
+    <option value="CLY">Calvi-Sainte-Catherine, (Córsega),  Francia. Aeropuerto code IATA: CLY</option>
+    <option value="BIA">Bastia-Poretta, (Córsega),  Francia. Aeropuerto code IATA: BIA</option>
+    <option value="AJA">Ajaccio-Napoléon Bonaparte, (Córsega),  Francia. Aeropuerto code IATA: AJA</option>
+    <option value="FSC">Figari Sud-Corse, (Córsega),  Francia. Aeropuerto code IATA: FSC</option>
+    <option value="ATH">Atenas, (Ática),  Grecia. Aeropuerto code IATA: ATH</option>
+    <option value="JKL">Pothia (en), (Egeo Meridional),  Grecia. Aeropuerto code IATA: JKL</option>
+    <option value="SKG">Tesalónica, (Macedonia Central),  Grecia. Aeropuerto code IATA: SKG</option>
+    <option value="FRS">Santa Elena de la Cruz, (Petén),  Guatemala. Aeropuerto code IATA: FRS</option>
+    <option value="GUA">Ciudad de Guatemala, (Guatemala),  Guatemala. Aeropuerto code IATA: GUA</option>
+    <option value="PBR">Puerto Barrios, (Izabal),  Guatemala. Aeropuerto code IATA: PBR</option>
+    <option value="SAP">San Pedro Sula, (Cortés),  Honduras. Aeropuerto code IATA: SAP</option>
+    <option value="TGU">Tegucigalpa, (Francisco Morazán),  Honduras. Aeropuerto code IATA: TGU</option>
+    <option value="BUD">Budapest, (Budapest),  Hungría. Aeropuerto code IATA: BUD</option>
+    <option value="QGY">Györ, (Győr-Moson-Sopron),  Hungría. Aeropuerto code IATA: QGY</option>
+    <option value="HBX">Hubballi, Dharwad, (Karnataka),  India. Aeropuerto code IATA: HBX</option>
+    <option value="ORK">Cork, (Munster),  Irlanda. Aeropuerto code IATA: ORK</option>
+    <option value="KEF">Reikiavik, (Höfuðborgarsvæðið),  Islandia. Aeropuerto code IATA: KEF</option>
+    <option value="HIR">Honiara, (Honiara),  Islas Salomón. Aeropuerto code IATA: HIR</option>
+    <option value="TLV">Tel Aviv, (Distrito Central),  Israel. Aeropuerto code IATA: TLV</option>
+    <option value="FCO">Roma, (Lacio),  Italia. Aeropuerto code IATA: FCO</option>
+    <option value="FLR">Florencia, (Toscana),  Italia. Aeropuerto code IATA: FLR</option>
+    <option value="NAP">Nápoles, (Campania),  Italia. Aeropuerto code IATA: NAP</option>
+    <option value="BRI">Bari, (Puglia),  Italia. Aeropuerto code IATA: BRI</option>
+    <option value="PMO">Palermo, (Sicilia),  Italia. Aeropuerto code IATA: PMO</option>
+    <option value="CTA">Catania, (Sicilia),  Italia. Aeropuerto code IATA: CTA</option>
+    <option value="TRS">Trieste, (Friuli-Venecia Julia),  Italia. Aeropuerto code IATA: TRS</option>
+    <option value="AHO">Alghero, (Sardegna),  Italia. Aeropuerto code IATA: AHO</option>
+    <option value="CAG">Cagliari, (Sardegna),  Italia. Aeropuerto code IATA: CAG</option>
+    <option value="OLB">Olbia, (Sardegna),  Italia. Aeropuerto code IATA: OLB</option>
+    <option value="HND">Tokio, (Tokio),  Japón. Aeropuerto code IATA: HND</option>
+    <option value="CMN">Casablanca, (Región de Casablanca-Settat),  Marruecos. Aeropuerto code IATA: CMN</option>
+    <option value="RAK">Marrakech, (Marrakech-Safí),  Marruecos. Aeropuerto code IATA: RAK</option>
+    <option value="RRG">Rodrigues, (Rodrigues),  Mauricio. Aeropuerto code IATA: RRG</option>
+    <option value="MGA">Managua, (Managua),  Nicaragua. Aeropuerto code IATA: MGA</option>
+    <option value="WLG">Wellington, (Wellington),  Nueva Zelanda. Aeropuerto code IATA: WLG</option>
+    <option value="AMS">Ámsterdam, (Holanda Septentrional),  Países Bajos. Aeropuerto code IATA: AMS</option>
+    <option value="AUA">Oranjestad, (Aruba),  Países Bajos. Aeropuerto code IATA: AUA</option>
+    <option value="EIN">Eindhoven, (Brabante Septentrional),  Países Bajos. Aeropuerto code IATA: EIN</option>
+    <option value="BYJ">Beja, (Alentejo),  Portugal. Aeropuerto code IATA: BYJ</option>
+    <option value="CVU">Isla de Corvo, (Islas Azores),  Portugal. Aeropuerto code IATA: CVU</option>
+    <option value="FAO">Faro, (Algarve),  Portugal. Aeropuerto code IATA: FAO</option>
+    <option value="FLW">Isla de Flores, (Islas Azores),  Portugal. Aeropuerto code IATA: FLW</option>
+    <option value="FNC">Funchal, (Madeira),  Portugal. Aeropuerto code IATA: FNC</option>
+    <option value="GRW">Isla Graciosa, (Islas Azores),  Portugal. Aeropuerto code IATA: GRW</option>
+    <option value="HOR">Isla de Faial, (Islas Azores),  Portugal. Aeropuerto code IATA: HOR</option>
+    <option value="LIS">Lisboa, (Lisboa),  Portugal. Aeropuerto code IATA: LIS</option>
+    <option value="OPO">Oporto, (Región Norte),  Portugal. Aeropuerto code IATA: OPO</option>
+    <option value="PDL">Isla de São Miguel, (Islas Azores),  Portugal. Aeropuerto code IATA: PDL</option>
+    <option value="PIX">Isla del Pico, (Islas Azores),  Portugal. Aeropuerto code IATA: PIX</option>
+    <option value="PXO">Isla de Porto Santo, (Madeira),  Portugal. Aeropuerto code IATA: PXO</option>
+    <option value="SJZ">Isla de São Jorge, (Islas Azores),  Portugal. Aeropuerto code IATA: SJZ</option>
+    <option value="SMA">Isla de Santa Maria, (Islas Azores),  Portugal. Aeropuerto code IATA: SMA</option>
+    <option value="TER">Isla Terceira, (Islas Azores),  Portugal. Aeropuerto code IATA: TER</option>
+    <option value="EDI">Edimburgo, (Escocia),  Reino Unido. Aeropuerto code IATA: EDI</option>
+    <option value="GIB">Gibraltar, (Gibraltar),  Reino Unido. Aeropuerto code IATA: GIB</option>
+    <option value="INV">Inverness, (Escocia),  Reino Unido. Aeropuerto code IATA: INV</option>
+    <option value="JER">Saint Helier, (Jersey),  Reino Unido. Aeropuerto code IATA: JER</option>
+    <option value="LHR">Londres, (Inglaterra),  Reino Unido. Aeropuerto code IATA: LHR</option>
+    <option value="LTN">Londres, (Inglaterra),  Reino Unido. Aeropuerto code IATA: LTN</option>
+    <option value="PSY">Puerto Argentino/Stanley, (Islas Malvinas),  Reino Unido. Aeropuerto code IATA: PSY</option>
+    <option value="MPN">Isla Soledad, (Islas Malvinas),  Reino Unidonota 7​. Aeropuerto code IATA: MPN</option>
+    <option value="SDQ">Santo Domingo, (Santo Domingo),  República Dominicana. Aeropuerto code IATA: SDQ</option>
+    <option value="SIN">Singapur, (Consejo del Sudeste nota 9​),  Singapur. Aeropuerto code IATA: SIN</option>
+    <option value="TPE">Taipéi, (Taoyuan),  Taiwán nota 10​. Aeropuerto code IATA: TPE</option>
+    <option value="DJE">Yerba, (Medenine),  Túnez. Aeropuerto code IATA: DJE</option>
+    <option value="IST">Estambul, (Provincia de Estambul),  Turquía. Aeropuerto code IATA: IST</option>
+    <option value="FOR">Fortaleza, (Ceará), Brasil. Aeropuerto code IATA: FOR</option>
+    <option value="DXB">Dubái, (Dubái), Emiratos Árabes Unidos. Aeropuerto code IATA: DXB</option>
+    <option value="BIO">Bilbao, (Vizcaya), España. Aeropuerto code IATA: BIO</option>
+    <option value="CDT">Castellon, (Comunidad Valenciana), España. Aeropuerto code IATA: CDT</option>
+    <option value="MLN">Melilla, (Melilla), España. Aeropuerto code IATA: MLN</option>
+    <option value="VGO">Vigo, (Galicia), España. Aeropuerto code IATA: VGO</option>
+    <option value="ORD">Chicago, (Illinois), Estados Unidos. Aeropuerto code IATA: ORD</option>
+    <option value="MXP">Milán, (Lombardía), Italia. Aeropuerto code IATA: MXP</option>
+    <option value="TSE">Astaná, (Provincia de Akmola), Kazajistán. Aeropuerto code IATA: TSE</option>
+    <option value="CUU">Chihuahua, (Chihuahua), México. Aeropuerto code IATA: CUU</option>
+    <option value="GDL">Guadalajara, Jalisco, (Jalisco), México. Aeropuerto code IATA: GDL</option>
+    <option value="HMO">Hermosillo, (Sonora), México. Aeropuerto code IATA: HMO</option>
+    <option value="MTY">Monterrey, (Nuevo León), México. Aeropuerto code IATA: MTY</option>
+    <option value="MEX">Ciudad de México, (México), México. Aeropuerto code IATA: MEX</option>
+    <option value="PTY">Ciudad de Panamá, (Provincia de Panamá), Panamá. Aeropuerto code IATA: PTY</option>
+    <option value="AGT">Ciudad del Este, (Alto Paraná), Paraguay. Aeropuerto code IATA: AGT</option>
+    <option value="ASU">Asunción, (Central), Paraguay. Aeropuerto code IATA: ASU</option>
+    <option value="ENO">Encarnacion (Paraguay), (Itapúa), Paraguay. Aeropuerto code IATA: ENO</option>
+    <option value="PJC">Pedro Juan Caballero (Paraguay), (Amambay), Paraguay. Aeropuerto code IATA: PJC</option>
+    <option value="LIM">Lima nota 5​, Callao nota 6​., (Callao), Perú. Aeropuerto code IATA: LIM</option>
+    <option value="PUJ">La Altagracia, (Plantilla:RD), Plantilla:RD. Aeropuerto code IATA: PUJ</option>
+    <option value="SBZ">Sibiu, (Distrito de Sibiu), Rumania. Aeropuerto code IATA: SBZ</option>
+    <option value="DME">Moscú, (Óblast de Moscú), Rusia. Aeropuerto code IATA: DME</option>
+    <option value="KGD">Kaliningrado, (Óblast de Kaliningrado), Rusia. Aeropuerto code IATA: KGD</option>
+    <option value="ARN">Estocolmo, (Estocolmo), Suecia. Aeropuerto code IATA: ARN</option>
+    <option value="MVD">Montevideo, (Montevideo), Uruguay. Aeropuerto code IATA: MVD</option>
+    <option value="PDP">Maldonado y Punta del Este, (Maldonado), Uruguay. Aeropuerto code IATA: PDP</option>
+    <option value="CCS">Caracas, (Dependencias Federales), Venezuela. Aeropuerto code IATA: CCS</option>
+    <option value="TGD">Montenegro, (Montenegro), . Aeropuerto code IATA: TGD</option>
+    <option value="CPT">Ciudad del Cabo, Sudafrica. Aeropuerto code IATA: CPT</option>
+    <option value="JNB">Johannesburgo, Sudafrica. Aeropuerto code IATA: JNB</option>
+    <option value="BFN">Bloemfontein, Sudafrica. Aeropuerto code IATA: BFN</option>
+    <option value="NTY">Ciudad del sol, Sudafrica. Aeropuerto code IATA: NTY</option>
+    <option value="DUR">Durban, Sudafrica. Aeropuerto code IATA: DUR</option>
+    <option value="ELS">East London, Sudafrica. Aeropuerto code IATA: ELS</option>
+    <option value="GRJ">George, Sudafrica. Aeropuerto code IATA: GRJ</option>
+    <option value="HDS">Hoedspruit, Sudafrica. Aeropuerto code IATA: HDS</option>
+    <option value="KIM">Kimberley, Sudafrica. Aeropuerto code IATA: KIM</option>
+    <option value="PHW">Phalaborwa, Sudafrica. Aeropuerto code IATA: PHW</option>
+    <option value="PZB">Pietermaritzburg, Sudafrica. Aeropuerto code IATA: PZB</option>
+    <option value="PTG">Polokwane, Sudafrica. Aeropuerto code IATA: PTG</option>
+    <option value="PLZ">Port Elizabeth, Sudafrica. Aeropuerto code IATA: PLZ</option>
+    <option value="RCB">Richards Bay, Sudafrica. Aeropuerto code IATA: RCB</option>
+    <option value="SZK">Skukuza, Sudafrica. Aeropuerto code IATA: SZK</option>
+    <option value="UTT">Umtata, Sudafrica. Aeropuerto code IATA: UTT</option>
+    <option value="UTN">Upington, Sudafrica. Aeropuerto code IATA: UTN</option>
+    <option value="ADD">Adís Abeba, Etiopia. Aeropuerto code IATA: ADD</option>
+</select>
+<br>
+<button onclick="generarRutas()">Generar Rutas</button>
+
+</html>
