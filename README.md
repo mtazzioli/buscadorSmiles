@@ -6,8 +6,8 @@ Si tenes dudas/sugerencias/ideas las podes dejar acá o comentando en el blog, a
 
 Espero que les sirva :)
 
-Autor: Marcelo Tazzioli 
-https://www.modotravl.com
-https://www.instagram.com/modotravl/
-https://www.facebook.com/modotravl
-https://twitter.com/modotravl
+Autor: Marcelo Tazzioli <br>
+[Blog](https://www.modotravl.com) <br>
+[Instagram](https://www.instagram.com/modotravl/) <br>
+[Facebook]https://www.facebook.com/modotravl) <br>
+[Twitter-X](https://twitter.com/modotravl) <br>
